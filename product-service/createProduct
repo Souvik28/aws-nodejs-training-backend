@@ -1,0 +1,36 @@
+"use strict";
+const uuid = require("uuid");
+const AWS = require("aws-sdk"); // eslint-disable-line import/no-extraneous-dependencies
+
+const dynamoDb = new AWS.DynamoDB.DocumentClient();
+
+module.exports.create = async (event) => {
+  const data = JSON.parse(event.body);
+  const productId = uuid.v1();
+  const productparams = {
+    TableName: process.env.PRODUCTS_TABLE,
+    Item: {
+      id: productId,
+      title: data.title,
+      description: data.description,
+      price: data.price,
+    },
+  };
+
+  await dynamoDb.put(productparams).promise();
+  await dynamoDb
+    .put({
+      TableName: process.env.STOCKS_TABLE,
+      Item: {
+        product_id: productId,
+        count: data.count,
+      },
+    })
+    .promise();
+  return {
+    statusCode: 200,
+    body: JSON.stringify({
+      message: `Product with ID ${productId} has been created`,
+    }),
+  };
+};
