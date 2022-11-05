@@ -17,3 +17,9 @@ with the request body:
 "price": 10,
 "count": 10
 }
+
+## Import Service
+
+GET - https://a4aa61csgk.execute-api.ap-south-1.amazonaws.com/dev/import
+GET - https://2ho7uyyrb7.execute-api.ap-south-1.amazonaws.com/swagger
+GET - https://2ho7uyyrb7.execute-api.ap-south-1.amazonaws.com/swagger.json
