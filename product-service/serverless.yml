@@ -26,32 +26,61 @@ plugins:
 provider:
   name: aws
   runtime: nodejs12.x
-
-# you can overwrite defaults here
-stage: dev
-region: ap-south-1
-
-# you can add statements to the Lambda function's IAM Role here
-#  iam:
-#    role:
-#      statements:
-#        - Effect: "Allow"
-#          Action:
-#            - "s3:ListBucket"
-#          Resource: { "Fn::Join" : ["", ["arn:aws:s3:::", { "Ref" : "ServerlessDeploymentBucket" } ] ]  }
-#        - Effect: "Allow"
-#          Action:
-#            - "s3:PutObject"
-#          Resource:
-#            Fn::Join:
-#              - ""
-#              - - "arn:aws:s3:::"
-#                - "Ref" : "ServerlessDeploymentBucket"
-#                - "/*"
+  environment:
+    PRODUCTS_TABLE: products
+    STOCKS_TABLE: stocks
+  stage: dev
+  region: ap-south-1
+  httpApi:
+    cors: true
+  iam:
+    role:
+      statements:
+        - Effect: "Allow"
+          Action: 
+            - "dynamodb:BatchGetItem"
+            - "dynamodb:GetItem"
+            - "dynamodb:Query"
+            - "dynamodb:Scan"
+            - "dynamodb:BatchWriteItem"
+            - "dynamodb:PutItem"
+            - "dynamodb:UpdateItem"
+          Resource:
+            - "arn:aws:dynamodb:${aws:region}:*:table/${self:provider.environment.PRODUCTS_TABLE}"
+            - "arn:aws:dynamodb:${aws:region}:*:table/${self:provider.environment.STOCKS_TABLE}"
+            # - Fn::Join:
+            #   - ""
+            #   - - "arn:aws:dynamodb:"
+            #     - "Ref": "AWS::Region"
+            #     - ":"
+            #     - "Ref": "AWS::AccountId"
+            #     - ":table/"
+            #     - "Ref": "products"
+            # - Fn::Join:
+            #   - ""
+            #   - - "arn:aws:dynamodb:"
+            #     - "Ref": "AWS::Region"
+            #     - ":"
+            #     - "Ref": "AWS::AccountId"
+            #     - ":table/"
+            #     - "Ref": "stocks"
+          
+      # - Effect: "Allow"
+      #   Action:
+      #     - "s3:ListBucket"
+      #   Resource: { "Fn::Join" : ["", ["arn:aws:s3:::", { "Ref" : "ServerlessDeploymentBucket" } ] ]  }
+      # - Effect: "Allow"
+      #   Action:
+      #     - "s3:PutObject"
+      #   Resource:
+      #     Fn::Join:
+      #       - ""
+      #       - - "arn:aws:s3:::"
+      #         - "Ref" : "ServerlessDeploymentBucket"
+      #         - "/*"
 
 # you can define service wide environment variables here
-#  environment:
-#    variable1: value1
+
 
 # you can add packaging information here
 #package:
@@ -75,6 +104,13 @@ functions:
       - httpApi:
           path: /products/{productId}
           method: get
+  
+  createProduct:
+    handler: createProduct.create
+    events:
+      - httpApi:
+          path: /products
+          method: post
 #    The following are a few example events you can configure
 #    NOTE: Please make sure to change your handler code to work with those events
 #    Check the event documentation for details
