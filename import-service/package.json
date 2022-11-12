@@ -1,0 +1,21 @@
+{
+  "dependencies": {
+    "aws-sdk": "^2.1241.0",
+    "csv-parser": "^3.0.0"
+  },
+  "name": "import-service",
+  "version": "1.0.0",
+  "scripts": {
+    "deploy": "sls deploy"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "type": "module",
+  "devDependencies": {
+    "serverless-webpack": "^5.10.0",
+    "webpack": "^5.74.0",
+    "webpack-node-externals": "^3.0.0",
+    "serverless-auto-swagger": "^2.9.2"
+  }
+}
