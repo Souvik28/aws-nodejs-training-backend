@@ -15,6 +15,10 @@ provider:
       Action:
         - s3:*
       Resource: arn:aws:s3:::aws-training-product-import-bucket/*
+    - Effect: Allow
+      Action:
+        - sqs:SendMessage
+      Resource: arn:aws:sqs:ap-south-1:915264841307:create-product-queue
 
 plugins:
   - serverless-webpack

@@ -15,8 +15,9 @@ export const importProductsFile = async (event) => {
     const params = {
       Bucket: BUCKET,
       Key: `${FOLDER_PATH}/${name}`,
+      ContentType: "text/csv",
     };
-    const signedUrl = await s3.getSignedUrlPromise("getObject", params);
+    const signedUrl = await s3.getSignedUrlPromise("putObject", params);
 
     return {
       statusCode: HTTP_STATUS_CODES.OK,

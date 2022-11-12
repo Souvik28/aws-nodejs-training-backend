@@ -8,9 +8,9 @@
   "paths": {
     "/products": {
       "get": {
-        "summary": "getProductsList",
+        "summary": "getProducts",
         "description": "",
-        "operationId": "getProductsList.get./products",
+        "operationId": "getProducts.get.products",
         "consumes": [
           "application/json"
         ],
@@ -27,7 +27,7 @@
       "post": {
         "summary": "createProduct",
         "description": "",
-        "operationId": "createProduct.post./products",
+        "operationId": "createProduct.post.products",
         "consumes": [
           "application/json"
         ],
@@ -44,9 +44,9 @@
     },
     "/products/{productId}": {
       "get": {
-        "summary": "getProductsById",
+        "summary": "getProductById",
         "description": "",
-        "operationId": "getProductsById.get./products/{productId}",
+        "operationId": "getProductById.get.products/{productId}",
         "consumes": [
           "application/json"
         ],
