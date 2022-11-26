@@ -41,3 +41,11 @@ importProductsFile: import-service-dev-importProductsFile (8.9 kB)
  importFileParser: import-service-dev-importFileParser (8.9 kB)
 swaggerUI: import-service-dev-swagger-ui (8.9 kB)
 swaggerJSON: import-service-dev-swagger-json (8.9 kB)
+
+## Cart-Service
+
+endpoints:  
+ ANY - https://unsfhnjouj.execute-api.ap-south-1.amazonaws.com/dev/
+ANY - https://unsfhnjouj.execute-api.ap-south-1.amazonaws.com/dev/{proxy+}
+functions:
+main: cart-service-dev-main (27 MB)
